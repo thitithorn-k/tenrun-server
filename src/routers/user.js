@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, getUser, loginUser } = require('../models/user');
+const { createUser, getUser, loginUser, userVerify } = require('../models/user');
 
 const userRouter = express.Router();
 
