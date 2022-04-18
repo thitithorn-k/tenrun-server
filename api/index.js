@@ -4,8 +4,8 @@ const cors = require('cors');
 
 const bodyParser = require('body-parser');
 
-const historyRouter = require('./api/src/routers/history');
-const userRouter = require('./api/src/routers/user');
+const historyRouter = require('./src/routers/history');
+const userRouter = require('./src/routers/user');
 
 const app = express();
 const coreOptions = {
@@ -16,11 +16,11 @@ const coreOptions = {
 app.use(bodyParser.json({extended: true}));
 app.use(cors(coreOptions));
 
-app.use('/history', historyRouter);
-app.use('/user', userRouter);
+app.use('/api/history', historyRouter);
+app.use('/api/user', userRouter);
 
 const boot = () => {
-    const { mongoUri, mongoOptions } = require('./api/config');
+    const { mongoUri, mongoOptions } = require('./config');
     mongoose.connect(mongoUri, mongoOptions);
 
     const PORT = 4000;

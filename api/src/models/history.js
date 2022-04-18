@@ -27,7 +27,7 @@ const historySchema = new mongoose.Schema({
         type: ObjectId,
         required: true,
     }
-})
+});
 const historyModel = mongoose.model('Histories', historySchema, 'histories');
 
 const getActivities = async (searchData) => {
