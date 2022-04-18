@@ -1,9 +1,9 @@
 module.exports = {
-    mongoUri: 'mongodb+srv://tenrun.4rutj.mongodb.net/',
+    mongoUri: process.env.mongo_uri,
     mongoOptions: {
         user: process.env.mongo_user,
         pass: process.env.mongo_pass,
-        dbName: 'tenrun',
+        dbName: process.env.mongo_dbname,
         retryWrites: true,
         w: 'majority',
     },

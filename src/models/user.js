@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     'weight': Number,
     'height': Number,
     'dob': Date,
-    'session': ObjectId,
+    'token': ObjectId,
 });
 
 const userModel = mongoose.model('Users', userSchema, 'users')
@@ -34,6 +34,7 @@ const createUser = async (userData) => {
     if(res.length > 0){
         return {status: 409 ,error: 'this email already exits'};
     } else {
+        
         const createResult = await userModel.create(userData);
         if(createResult.email === userData.email){
             return {status: 'Register successfully'}; //create new user successfully
@@ -59,26 +60,30 @@ const getUser = async (userId) => {
 }
 
 const loginUser = async (email, password) => {
-    const res = await userModel.findOne({'email': email, 'password': password}, {'_id': 1, 'session': 1});
+    const res = await userModel.findOne({'email': email, 'password': password}, {'_id': 1, 'token': 1});
     if(res){
-        const newSession = new ObjectId();
-        const addSessionRes = await userModel.updateOne({'email': email, 'password': password}, {'$set': {'session': newSession}});
-        if(addSessionRes.acknowledged){
-            return {status: 'Login successfully', '_id': res._id.toString(), 'session': newSession.toString()};
+        const newToken = new ObjectId();
+        const addTokenRes = await userModel.updateOne({'email': email, 'password': password}, {'$set': {'token': newToken}});
+        if(addTokenRes.acknowledged){
+            return {status: 'Login successfully', '_id': res._id.toString(), 'token': newToken.toString()};
         } else {
-            return { status: 500, error: 'error when trying to add session'};
+            return { status: 500, error: 'error when trying to add token'};
         }
     } else {
         return {status: 404, error: 'email or password is incorrect'}
     }
 }
 
-const userVerify = async (userId, session) => {
-    if(!ObjectId.isValid(userId) || !ObjectId.isValid(session)) return false;
-    const res = await userModel.findOne({'_id': ObjectId(userId), 'session': ObjectId(session)}, {'_id': 1});
-    if(res){
-        return true;
-    } else {
+const userVerify = async (userId, token) => {
+    try{
+        if(!ObjectId.isValid(userId) || !ObjectId.isValid(token)) return false;
+        const res = await userModel.findOne({'_id': ObjectId(userId), 'token': ObjectId(token)}, {'_id': 1});
+        if(res){
+            return true;
+        } else {
+            return false;
+        }
+    } catch {
         return false;
     }
 }

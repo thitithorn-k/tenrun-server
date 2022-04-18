@@ -9,7 +9,7 @@ const userRouter = require('./src/routers/user');
 
 const app = express();
 const coreOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.origin || 'http://localhost:3000',
     credentials: true,
 }
 
