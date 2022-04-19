@@ -21,7 +21,7 @@ historyRouter.use('/', async (req, res, next) => {
     if(verifyRes){
         next();
     } else {
-        res.status(403).send({error: 'permission denied'});
+        res.status(403).send({status: 403, error: 'permission denied'});
     }
 });
 
