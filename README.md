@@ -9,23 +9,23 @@ server API for Tenrun web app
 `get(‘/api/user’) `
 
 - send:
-```json
+```
 {'id': String}
 ```
-- return:
--- success:
-```json
+
+- success return:
+```
 {'_id': ObjectId}
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
 
 #### add new user
 `post(‘/api/user’)`
 - send: 
-```json
+```
 {
     'email': String,
     'password': String,
@@ -35,13 +35,13 @@ server API for Tenrun web app
     'dob': Date,
 }
 ```
-- return:
--- success: 
-```json
+
+- success return: 
+```
 {'status': 'Register successfully'}
 ```
--- fail: 
-```json
+- fail return: 
+```
 {'status': Number, 'error': String}
 ```
 
@@ -49,38 +49,38 @@ server API for Tenrun web app
 #### Create login token
 `post(‘/api/user/login’)`
 - send:
-```json
-{_
+```
+{
     'email': String,
     'password': String
 }
 ```
-- return:
--- success:
-```json
+
+- success return:
+```
 {'_id': ObjectId}
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
 
 #### Verify login token
 `get(‘/api/user/verify’)`
 - send:
-```json
-{_
+```
+{
     'userId': String,
     'token': String
 }
 ```
-- return:
--- success:
-```json
+
+- success return:
+```
 true
 ```
--- fail:
-```json
+- fail return:
+```
 false
 ```
 
@@ -91,24 +91,24 @@ false
 #### Get user activities
 `get(‘/api/history’)`
 - send:
-```json
-{_
+```
+{
     'userId': Number,
-	'token': Number
-	'page': Number,
-	'activitiesFilter': String //string of date, optional
+    'token': Number
+    'page': Number,
+    'activitiesFilter': String //string of date, optional
 }
 ```
-- return:
--- success:
-```json
+
+- success return:
+```
 {
     'count': Number, //number of activities
     'data': res //Array of activities
 }
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
 
@@ -116,114 +116,114 @@ false
 `post(‘/api/history’)`
 
 - send:
-```json
+```
 {
-	'userId': String,
-	'token': String,
-	'addData': {
-		'name': String,
-		'detail': String,
-		'activity_type': String,
-		'data': Date,
-		'duration': Number
-	}
+    'userId': String,
+    'token': String,
+    'addData': {
+        'name': String,
+        'detail': String,
+        'activity_type': String,
+        'data': Date,
+        'duration': Number
+    }
 }
 ```
-- return:
--- success:
-```json
+
+- success return:
+```
 {'status': 'add activity successfuly'}
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
 
 #### Update activity
 `put(‘/api/history’)`
-```json
+```
 {
-	'userId': String,
-	'token': String,
-	'data': {
-		'name': String,
-		'detail': String,
-		'activity_type': String,
-		'data': Date,
-		'duration': Number
-	}
+    'userId': String,
+    'token': String,
+    'data': {
+        'name': String,
+        'detail': String,
+        'activity_type': String,
+        'data': Date,
+        'duration': Number
+    }
 }
 
 ```
 
-- return:
--- success:
-```json
+
+- success return:
+```
 {'status': 'update activity successfuly'}
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
 
 #### Remove activity
 `delete(‘/api/history’)`
-```json
+```
 {
-	'userId': String,
-	'token': String,
-	'removeId': String
+    'userId': String,
+    'token': String,
+    'removeId': String
 }
 
 ```
 
-- return:
--- success:
-```json
+
+- success return:
+```
 {'status': 'remove activity successfuly'}
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
 
 #### Get user summary
 `get(‘/api/history/summary/’)`
 - send:
-```json
+```
 {_
     'userId': Number,
-	'token': Number
+    'token': Number
 }
 ```
-- return:
--- success:
-```json
+
+- success return:
+```
 {
-	'today': [
-		{
-			'_id': $activity_type,
-			'duration': Number,
-			'count': Number,
-		}
-	],
-	'seven': [
-		{
-			'_id': $activity_type,
-			'duration': Number,
-			'count': Number,
-		}
-	],
-	'month': [
-		{
-			'_id': $activity_type,
-			'duration': Number,
-			'count': Number,
-		}
-	],
+    'today': [
+        {
+            '_id': $activity_type,
+            'duration': Number,
+            'count': Number,
+        }
+    ],
+    'seven': [
+        {
+            '_id': $activity_type,
+            'duration': Number,
+            'count': Number,
+        }
+    ],
+    'month': [
+        {
+            '_id': $activity_type,
+            'duration': Number,
+            'count': Number,
+        }
+    ],
 }
 ```
--- fail:
-```json
+- fail return:
+```
 {'status': Number, 'error': String}
 ```
