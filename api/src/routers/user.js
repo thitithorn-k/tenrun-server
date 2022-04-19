@@ -35,12 +35,9 @@ userRouter.post('/login', async(req, res, next) => {
 
 userRouter.get('/verify', async(req, res, next) => {
     const userData = req.query;
-    const verifyRes = await userVerify(userData.userId, userData.session);
-    if(verifyRes.error){
-        res.status(verifyRes.status).send(verifyRes);
-    } else {
-        res.status(200).send(verifyRes);
-    }
+    console.log(userData);
+    const verifyRes = await userVerify(userData.userId, userData.token);
+    res.status(200).send(verifyRes);
 });
 
 module.exports = userRouter;
