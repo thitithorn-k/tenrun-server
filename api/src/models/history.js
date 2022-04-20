@@ -5,7 +5,6 @@ const {userVerify} = require('./user');
 const historySchema = new mongoose.Schema({
     'name': {
         type: String,
-        unique: true,
         required: true,
     },
     'detail': {
