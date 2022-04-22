@@ -9,23 +9,23 @@ server API for Tenrun web app
 `get(‘/api/user’) `
 
 - send:
-```
+```javascript
 {'id': String}
 ```
 
 - success return:
-```
+```javascript
 {'_id': ObjectId}
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
 #### add new user
 `post(‘/api/user’)`
 - send: 
-```
+```javascript
 {
     'email': String,
     'password': String,
@@ -37,11 +37,11 @@ server API for Tenrun web app
 ```
 
 - success return: 
-```
+```javascript
 {'status': 'Register successfully'}
 ```
 - fail return: 
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
@@ -49,7 +49,7 @@ server API for Tenrun web app
 #### Create login token
 `post(‘/api/user/login’)`
 - send:
-```
+```javascript
 {
     'email': String,
     'password': String
@@ -57,18 +57,18 @@ server API for Tenrun web app
 ```
 
 - success return:
-```
+```javascript
 {'_id': ObjectId}
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
 #### Verify login token
 `get(‘/api/user/verify’)`
 - send:
-```
+```javascript
 {
     'userId': String,
     'token': String
@@ -76,11 +76,11 @@ server API for Tenrun web app
 ```
 
 - success return:
-```
+```javascript
 true
 ```
 - fail return:
-```
+```javascript
 false
 ```
 
@@ -91,7 +91,7 @@ false
 #### Get user activities
 `get(‘/api/history’)`
 - send:
-```
+```javascript
 {
     'userId': Number,
     'token': Number
@@ -101,14 +101,14 @@ false
 ```
 
 - success return:
-```
+```javascript
 {
     'count': Number, //number of activities
-    'data': res //Array of activities
+    'data': Array
 }
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
@@ -116,7 +116,7 @@ false
 `post(‘/api/history’)`
 
 - send:
-```
+```javascript
 {
     'userId': String,
     'token': String,
@@ -131,17 +131,19 @@ false
 ```
 
 - success return:
-```
+```javascript
 {'status': 'add activity successfuly'}
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
 #### Update activity
 `put(‘/api/history’)`
-```
+
+- send:
+```javascript
 {
     'userId': String,
     'token': String,
@@ -158,17 +160,19 @@ false
 
 
 - success return:
-```
+```javascript
 {'status': 'update activity successfuly'}
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
 #### Remove activity
 `delete(‘/api/history’)`
-```
+
+- send:
+```javascript
 {
     'userId': String,
     'token': String,
@@ -179,18 +183,18 @@ false
 
 
 - success return:
-```
+```javascript
 {'status': 'remove activity successfuly'}
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
 
 #### Get user summary
 `get(‘/api/history/summary/’)`
 - send:
-```
+```javascript
 {_
     'userId': Number,
     'token': Number
@@ -198,7 +202,7 @@ false
 ```
 
 - success return:
-```
+```javascript
 {
     'today': [
         {
@@ -224,6 +228,6 @@ false
 }
 ```
 - fail return:
-```
+```javascript
 {'status': Number, 'error': String}
 ```
