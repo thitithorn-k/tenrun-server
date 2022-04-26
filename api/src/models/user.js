@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const ObjectId = mongoose.Types.ObjectId;
 
 const userSchema = mongoose.Schema({
@@ -34,7 +35,8 @@ const createUser = async (userData) => {
     if(res.length > 0){
         return {status: 409 ,error: 'this email already exits'};
     } else {
-        
+        const hash = bcrypt.hashSync(userData.password, Number.parseInt(process.env.saltRounds));
+        userData.password = hash;
         const createResult = await userModel.create(userData);
         if(createResult.email === userData.email){
             return {status: 'Register successfully'}; //create new user successfully
@@ -60,18 +62,19 @@ const getUser = async (userId) => {
 }
 
 const loginUser = async (email, password) => {
-    const res = await userModel.findOne({'email': email, 'password': password}, {'_id': 1, 'token': 1});
-    if(res){
-        const newToken = new ObjectId();
-        const addTokenRes = await userModel.updateOne({'email': email, 'password': password}, {'$set': {'token': newToken}});
-        if(addTokenRes.acknowledged){
-            return {status: 'Login successfully', '_id': res._id.toString(), 'token': newToken.toString()};
-        } else {
-            return { status: 500, error: 'error when trying to add token'};
+    const getUserRes = await userModel.findOne({'email': email}, {'_id': 1, 'password': 1, 'token': 1});
+    if(getUserRes){
+        if(bcrypt.compareSync(password, getUserRes.password)){
+            const newToken = new ObjectId();
+            const addTokenRes = await userModel.updateOne({'email': email}, {'$set': {'token': newToken}});
+            if(addTokenRes.acknowledged){
+                return {status: 'Login successfully', '_id': getUserRes._id.toString(), 'token': newToken.toString()};
+            } else {
+                return { status: 500, error: 'error when trying to add token'};
+            }
         }
-    } else {
-        return {status: 404, error: 'email or password is incorrect'}
     }
+    return {status: 404, error: 'email or password is incorrect'}
 }
 
 const userVerify = async (userId, token) => {
